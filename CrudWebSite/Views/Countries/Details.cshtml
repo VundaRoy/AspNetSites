@@ -1,0 +1,74 @@
+﻿@model CrudWebSite.Models.Country
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Country</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CountryCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CountryCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Capital)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Capital)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Population)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Population)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AreaSqKm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AreaSqKm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstLang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstLang)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecondLang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecondLang)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

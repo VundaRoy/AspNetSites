@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CrudSiteDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryCode" Type="nchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Capital" Type="nvarchar" MaxLength="50" />
+          <Property Name="Population" Type="int" />
+          <Property Name="AreaSqKm" Type="float" />
+          <Property Name="FirstLang" Type="int" />
+          <Property Name="SecondLang" Type="int" />
+        </EntityType>
+        <EntityType Name="Diplomat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar(max)" />
+          <Property Name="Language" Type="int" />
+          <Property Name="Country" Type="int" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LangCode" Type="nchar" MaxLength="10" />
+          <Property Name="LangDescription" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Translator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Photo" Type="varbinary" MaxLength="50" />
+          <Property Name="Ensign" Type="varbinary(max)" />
+          <Property Name="DOB" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_dbo_Diplomat_dbo_Country_id">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Diplomat" Type="Self.Diplomat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Diplomat">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Diplomat_dbo_Language_id">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Diplomat" Type="Self.Diplomat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Diplomat">
+              <PropertyRef Name="Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrudSiteDataModelStoreContainer">
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Diplomat" EntityType="Self.Diplomat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Translator" EntityType="Self.Translator" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Diplomat_dbo_Country_id" Association="Self.FK_dbo_Diplomat_dbo_Country_id">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Diplomat" EntitySet="Diplomat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Diplomat_dbo_Language_id" Association="Self.FK_dbo_Diplomat_dbo_Language_id">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Diplomat" EntitySet="Diplomat" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CrudSiteDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Capital" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Population" Type="Int32" />
+          <Property Name="AreaSqKm" Type="Double" />
+          <Property Name="FirstLang" Type="Int32" />
+          <Property Name="SecondLang" Type="Int32" />
+          <NavigationProperty Name="Diplomats" Relationship="Self.FK_dbo_Diplomat_dbo_Country_id" FromRole="Country" ToRole="Diplomat" />
+        </EntityType>
+        <EntityType Name="Diplomat">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Language" Type="Int32" />
+          <Property Name="Country" Type="Int32" />
+          <NavigationProperty Name="Country1" Relationship="Self.FK_dbo_Diplomat_dbo_Country_id" FromRole="Diplomat" ToRole="Country" />
+          <NavigationProperty Name="Language1" Relationship="Self.FK_dbo_Diplomat_dbo_Language_id" FromRole="Diplomat" ToRole="Language" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LangCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="LangDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Diplomats" Relationship="Self.FK_dbo_Diplomat_dbo_Language_id" FromRole="Language" ToRole="Diplomat" />
+        </EntityType>
+        <Association Name="FK_dbo_Diplomat_dbo_Country_id">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Diplomat" Type="Self.Diplomat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Diplomat">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Diplomat_dbo_Language_id">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Diplomat" Type="Self.Diplomat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Diplomat">
+              <PropertyRef Name="Language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CrudSiteDataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="Diplomats" EntityType="Self.Diplomat" />
+          <EntitySet Name="Languages" EntityType="Self.Language" />
+          <AssociationSet Name="FK_dbo_Diplomat_dbo_Country_id" Association="Self.FK_dbo_Diplomat_dbo_Country_id">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Diplomat" EntitySet="Diplomats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Diplomat_dbo_Language_id" Association="Self.FK_dbo_Diplomat_dbo_Language_id">
+            <End Role="Language" EntitySet="Languages" />
+            <End Role="Diplomat" EntitySet="Diplomats" />
+          </AssociationSet>
+          <EntitySet Name="Translators" EntityType="CrudSiteDataModel.Translator" />
+        </EntityContainer>
+        <EntityType Name="Translator">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="Binary" MaxLength="50" FixedLength="false" />
+          <Property Name="Ensign" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CrudSiteDataModelStoreContainer" CdmEntityContainer="CrudSiteDataEntities">
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="CrudSiteDataModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Capital" ColumnName="Capital" />
+                <ScalarProperty Name="Population" ColumnName="Population" />
+                <ScalarProperty Name="AreaSqKm" ColumnName="AreaSqKm" />
+                <ScalarProperty Name="FirstLang" ColumnName="FirstLang" />
+                <ScalarProperty Name="SecondLang" ColumnName="SecondLang" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Diplomats">
+            <EntityTypeMapping TypeName="CrudSiteDataModel.Diplomat">
+              <MappingFragment StoreEntitySet="Diplomat">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Language" ColumnName="Language" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Languages">
+            <EntityTypeMapping TypeName="CrudSiteDataModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LangCode" ColumnName="LangCode" />
+                <ScalarProperty Name="LangDescription" ColumnName="LangDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Translators">
+            <EntityTypeMapping TypeName="CrudSiteDataModel.Translator">
+              <MappingFragment StoreEntitySet="Translator">
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Ensign" ColumnName="Ensign" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
