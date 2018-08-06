@@ -1,4 +1,4 @@
 # AspNetSites
 Scaffolding, ASP.NET MVC, dropdown selects
 
-CrudSite project is a sample demo of ow CRUD can be applied using ASP.NET MVC to for creating records.
+CrudWebSite is a sample CRUD site using ASP.NET MVC that utilises scaffolding and database first.
